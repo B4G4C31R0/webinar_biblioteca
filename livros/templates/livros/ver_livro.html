@@ -1,0 +1,14 @@
+<h1>{{livro.titulo}}</h1>
+{{livro.sinopse}} <br>
+{{livro.data_publicacao}} <br>
+
+{% for i in livro.autor.all %}
+    {{i}} <br>
+{% empty %}
+    Não há autores. <br>
+{%endfor%}
+
+<br><br>
+<a href="{% url 'livros:editar_livros' livro.id %}">
+    <button>Editar</button>
+</a>
