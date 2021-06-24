@@ -2,10 +2,19 @@
 
 {% for i in livro %}
 
-    <a href="{% url 'livros:ver_livro' i.id %}"> {{i}} </a><br>
+    <a href="{% url 'livros:ver_livro' i.id %}"> {{i}} </a> - Estoque disponivel: {{i.estoque}}<br>
 
 {%endfor%}
 
+
+{% if request.user.tipo_usuario == 1 %}
+<br>
+Bem vindo {{ request.user }}
+
+{% else %}
+<br><br>
 <a href="{% url 'livros:cadastrar_livros' %}">
     <button>Cadastro de Livros</button>
 </a>
+
+{% endif %}

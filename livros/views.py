@@ -35,3 +35,22 @@ def editar_livros(request, id):
         return redirect('livros:lista_livros')
     else:
         return render(request, 'livros/editar_livros.html', {'form':form})
+
+
+def alugar(request, id):
+    livro=Livro.objects.get(id=id)
+    livro.estoque-=1
+    livro.quem_alugou.add(request.user)
+    livro.save()
+    return redirect('livros:lista_livros')
+
+
+def devolver(request, id):
+    livro=Livro.objects.get(id=id)
+    if request.user in livro.quem_alugou.all():
+        livro.estoque+=1
+        livro.quem_alugou.remove(request.user)
+        livro.save()
+        return redirect('livros:lista_livros')
+    else:
+        return redirect('livros:lista_livros')
